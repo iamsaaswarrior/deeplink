@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube App Link Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        input {
+            width: 300px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            word-break: break-all;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube App Link Converter</h1>
+    <input type="text" id="youtubeLink" placeholder="Enter YouTube URL">
+    <button onclick="convertLink()">Convert</button>
+    <p id="output"></p>
+
+    <script>
+        function convertLink() {
+            const input = document.getElementById('youtubeLink').value;
+            let videoId = '';
+
+            // Extract video ID from standard or shortened URL
+            const standardUrlMatch = input.match(/v=([^&]+)/);
+            const shortenedUrlMatch = input.match(/youtu\.be\/([^?]+)/);
+
+            if (standardUrlMatch) {
+                videoId = standardUrlMatch[1];
+            } else if (shortenedUrlMatch) {
+                videoId = shortenedUrlMatch[1];
+            }
+
+            if (videoId) {
+                const deepLink = `youtube://www.youtube.com/watch?v=${videoId}`;
+                document.getElementById('output').innerHTML = `
+                    <strong>Open in YouTube App:</strong> <br><a href="${deepLink}" target="_blank">${deepLink}</a>
+                `;
+            } else {
+                document.getElementById('output').textContent = 'Invalid YouTube URL';
+            }
+        }
+    </script>
+</body>
+</html>
